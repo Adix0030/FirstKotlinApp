@@ -11,6 +11,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,7 +26,7 @@ class MainActivity : ComponentActivity() {
             FirstAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "World",
+                        name = "Irma",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -35,17 +37,16 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
+    val displayedText=remember{ mutableStateOf("") }
+
     Column(modifier = modifier.padding(16.dp)) {
-        Text(
-            text = "Goddag $name!",
-            modifier = modifier
-        )
+     Text(text = if(displayedText.value.isNotEmpty())displayedText.value else "Hi $name!")
         Button(
             onClick = {
-                null
+                displayedText.value="You pressed on the button! Your name is $name"
             },
         ) {
-            Text(text = "click me")
+            Text(text = "Press on me")
         }
     }
 }
