@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,7 +27,6 @@ class MainActivity : ComponentActivity() {
             FirstAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Irma",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -36,18 +36,29 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting( modifier: Modifier = Modifier) {
+    val nameInput = remember { mutableStateOf("")}
     val displayedText=remember{ mutableStateOf("") }
 
     Column(modifier = modifier.padding(16.dp)) {
-     Text(text = if(displayedText.value.isNotEmpty())displayedText.value else "Hi $name!")
+        TextField(
+            value = nameInput.value,
+            onValueChange = {nameInput.value=it},
+            label = {Text("Enter your name")},
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+
+
         Button(
             onClick = {
-                displayedText.value="You pressed on the button! Your name is $name"
+                displayedText.value="Your name is ${nameInput.value}"
             },
         ) {
-            Text(text = "Press on me")
+            Text(text = "Press")
         }
+        Text(text = if(displayedText.value.isNotEmpty())
+            displayedText.value
+        else "")
     }
 }
 
@@ -55,6 +66,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     FirstAppTheme {
-        Greeting("Android")
+        Greeting()
     }
 }
