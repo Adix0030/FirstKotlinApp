@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -18,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.firstapp.ui.theme.FirstAppTheme
+import androidx.compose.ui.text.input.KeyboardType
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +41,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting( modifier: Modifier = Modifier) {
     val nameInput = remember { mutableStateOf("")}
+    val ageInput= remember { mutableStateOf("") }
     val displayedText=remember{ mutableStateOf("") }
 
     Column(modifier = modifier.padding(16.dp)) {
@@ -48,10 +52,18 @@ fun Greeting( modifier: Modifier = Modifier) {
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
+        TextField(
+            value = ageInput.value,
+            onValueChange = {ageInput.value=it},
+            label = {Text("Enter your age")},
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier=Modifier.padding(bottom = 16.dp)
+
+        )
 
         Button(
             onClick = {
-                displayedText.value="Your name is ${nameInput.value}"
+                displayedText.value="Your name is ${nameInput.value} \nYour age is ${ageInput.value}"
             },
         ) {
             Text(text = "Press")
